@@ -86,6 +86,9 @@ type ClassCommonReq struct {
 	//0 = 不允许，1 = 允许。
 	//默认为1，不传使用默认值，传错报参数错误
 	IsAllowCheck uint8 `json:"isAllowCheck"`
+
+	//是否开启OMO站播 0-关闭，1-开启
+	OmoStationBroadcast uint8 `json:"omoStationBroadcast"`
 }
 
 // CreateClassReq 创建课堂请求参数
@@ -264,6 +267,7 @@ func (c *Client) CreateClass(req *CreateClassReq) (*CreateClassResp, *Error) {
 	signData["openState"] = strconv.FormatUint(uint64(req.OpenState), 10)
 	signData["isAllowCheck"] = strconv.FormatUint(uint64(req.IsAllowCheck), 10)
 	signData["uniqueIdentity"] = req.UniqueIdentity
+	signData["omoStationBroadcast"] = strconv.FormatUint(uint64(req.OmoStationBroadcast), 10)
 	var result CreateClassResp
 	err := c.httpPostV2(uri, req, signData, &result)
 	if err != nil {
@@ -296,6 +300,7 @@ func (c *Client) UpdateClass(req *UpdateClassReq) *Error {
 	signData["openState"] = strconv.FormatUint(uint64(req.OpenState), 10)
 	signData["isAllowCheck"] = strconv.FormatUint(uint64(req.IsAllowCheck), 10)
 	signData["activityId"] = strconv.FormatInt(req.ActivityId, 10)
+	signData["omoStationBroadcast"] = strconv.FormatUint(uint64(req.OmoStationBroadcast), 10)
 	var result CommonRespV2
 	err := c.httpPostV2(uri, req, signData, &result)
 	if err != nil {
