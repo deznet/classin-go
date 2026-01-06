@@ -8,7 +8,7 @@ type ClassCommonReq struct {
 	CourseId int64 `json:"courseId"`
 
 	//单元ID
-	UnitId int64 `json:"unitId"`
+	UnitId int64 `json:"unitId,omitempty"`
 
 	//课堂活动名称,长度不超过50字
 	Name string `json:"name"`
@@ -251,7 +251,9 @@ func (c *Client) CreateClass(req *CreateClassReq) (*CreateClassResp, *Error) {
 	uri := "/lms/activity/createClass"
 	signData := make(map[string]string, 0)
 	signData["courseId"] = strconv.FormatInt(req.CourseId, 10)
-	signData["unitId"] = strconv.FormatInt(req.UnitId, 10)
+	if req.UnitId > 0 {
+		signData["unitId"] = strconv.FormatInt(req.UnitId, 10)
+	}
 	signData["name"] = req.Name
 	signData["teacherUid"] = strconv.FormatInt(req.TeacherUid, 10)
 	signData["startTime"] = strconv.FormatInt(req.StartTime, 10)
@@ -284,7 +286,9 @@ func (c *Client) UpdateClass(req *UpdateClassReq) *Error {
 	uri := "/lms/activity/updateClass"
 	signData := make(map[string]string, 0)
 	signData["courseId"] = strconv.FormatInt(req.CourseId, 10)
-	signData["unitId"] = strconv.FormatInt(req.UnitId, 10)
+	if req.UnitId > 0 {
+		signData["unitId"] = strconv.FormatInt(req.UnitId, 10)
+	}
 	signData["name"] = req.Name
 	signData["teacherUid"] = strconv.FormatInt(req.TeacherUid, 10)
 	signData["startTime"] = strconv.FormatInt(req.StartTime, 10)
