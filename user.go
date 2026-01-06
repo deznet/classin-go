@@ -147,8 +147,9 @@ type EditTeacherReq struct {
 // Register 注册用户
 // @param req *RegisterReq 注册请求参数
 // @result  int64 注册成功返回的用户 UID
+// @result  bool 用户是否已注册，已注册返回true,否则返回false
 // @result *Error 错误信息
-func (c *Client) Register(req *RegisterReq) (int64, *Error) {
+func (c *Client) Register(req *RegisterReq) (int64, bool, *Error) {
 	formData := make(map[string]string)
 	formData["telephone"] = req.Telephone
 	formData["email"] = req.Email
@@ -163,11 +164,11 @@ func (c *Client) Register(req *RegisterReq) (int64, *Error) {
 	if err != nil {
 		//如果手机号/邮箱已存在,直接返回数据
 		if err.GetCode() == 135 || err.GetCode() == 461 {
-			return result.Data, nil
+			return result.Data, true, nil
 		}
-		return 0, err
+		return 0, false, err
 	}
-	return result.Data, nil
+	return result.Data, false, nil
 }
 
 // AddSchoolStudent 添加学生（机构下添加学生）

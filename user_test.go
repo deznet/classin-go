@@ -19,11 +19,11 @@ func TestClient_Register(t *testing.T) {
 		FileData:          "",
 		AddToSchoolMember: 2,
 	}
-	userId, err := client.Register(&req)
+	userId, isUserExist, err := client.Register(&req)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(userId)
+	t.Log("用户id:", userId, " 是否已注册：", isUserExist)
 }
 
 // 学生注册测试
